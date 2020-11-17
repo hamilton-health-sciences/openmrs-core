@@ -1,11 +1,7 @@
 # TRUNK-5816 We currently have 2 tests that are failing on Windows (all our CI is on unix, need Windows to reproduce) see https://talk.openmrs.org/t/junit-5-migration/29273/50
-name: TRUNK-5816 Reproduce failing Handler tests on Windows
+name: Build
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:
