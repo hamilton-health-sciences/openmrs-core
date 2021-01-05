@@ -187,53 +187,21 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
+				<artifactId>spring-test</artifactId>
 				<version>${springVersion}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
+				<artifactId>spring-framework-bom</artifactId>
 				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-oxm</artifactId>
-				<version>${springVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context-support</artifactId>
-				<version>${springVersion}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.javassist</groupId>
@@ -353,22 +321,22 @@
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v23</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v24</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v25</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v26</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.dom4j</groupId>
@@ -378,7 +346,7 @@
 			<dependency>
 				<groupId>jaxen</groupId>
 				<artifactId>jaxen</artifactId>
-				<version>1.2.0-atlassian-2</version>
+				<version>1.2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>xerces</groupId>
@@ -437,12 +405,12 @@
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-core-asl</artifactId>
-				<version>1.9.13-atlassian-2</version>
+				<version>1.9.13</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-mapper-asl</artifactId>
-				<version>1.9.13-atlassian-2</version>
+				<version>1.9.13</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -463,17 +431,6 @@
 				<groupId>org.azeckoski</groupId>
 				<artifactId>reflectutils</artifactId>
 				<version>0.9.20</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${springVersion}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
@@ -521,15 +478,20 @@
 				<artifactId>powermock-api-mockito2</artifactId>
 				<version>2.0.9</version>
 			</dependency>
+			<!--hamcrest-core is needed to update JUnit 4 transitive dependency on hamcrest-core as explained in
+			 http://hamcrest.org/JavaHamcrest/distributables#upgrading-from-hamcrest-1x and
+			 https://github.com/hamcrest/JavaHamcrest/issues/224#issuecomment-449760045
+			 Once we remove JUnit 4 we will only need org.hamcrest:hamcrest
+			 -->
 			<dependency>
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest-core</artifactId>
-				<version>2.2</version>
+				<version>${hamcrestVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hamcrest</groupId>
-				<artifactId>hamcrest-library</artifactId>
-				<version>2.2</version>
+				<artifactId>hamcrest</artifactId>
+				<version>${hamcrestVersion}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.h2database</groupId>
@@ -672,7 +634,7 @@
 				<plugin>
 					<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
 					<artifactId>maven-java-formatter-plugin</artifactId>
-					<version>0.4</version>
+					<version>0.3</version>
 					<configuration>
 						<compilerSource>${javaCompilerVersion}</compilerSource>
 						<compilerCompliance>${javaCompilerVersion}</compilerCompliance>
@@ -1144,13 +1106,14 @@
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
 		<springVersion>5.3.2</springVersion>
-		<hibernateVersion>5.4.25.Final</hibernateVersion>
+		<hibernateVersion>5.4.27.Final</hibernateVersion>
 		<hibernateSearchVersion>5.11.7.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
 		<aspectjVersion>1.9.6</aspectjVersion>
 		<jacksonVersion>2.12.0</jacksonVersion>
 		<junitVersion>5.7.0</junitVersion>
 		<mockitoVersion>3.7.0</mockitoVersion>
+		<hamcrestVersion>2.2</hamcrestVersion>
 
 		<slf4jVersion> 1.7.30</slf4jVersion>
 		<log4jVersion>2.14.0</log4jVersion>
