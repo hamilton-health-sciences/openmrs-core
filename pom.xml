@@ -536,7 +536,7 @@
 			<dependency>
 			  <groupId>joda-time</groupId>
 			  <artifactId>joda-time</artifactId>
-			  <version>2.10.9</version>
+			  <version>2.10.10</version>
 			</dependency>
 			<dependency>
 			    <groupId>javax.annotation</groupId>
@@ -1106,12 +1106,12 @@
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
 		<springVersion>5.3.3</springVersion>
-		<hibernateVersion>5.4.27.Final</hibernateVersion>
+		<hibernateVersion>5.4.28.Final</hibernateVersion>
 		<hibernateSearchVersion>5.11.8.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
 		<aspectjVersion>1.9.6</aspectjVersion>
 		<jacksonVersion>2.12.1</jacksonVersion>
-		<junitVersion>5.7.0</junitVersion>
+		<junitVersion>5.7.1</junitVersion>
 		<mockitoVersion>3.7.7</mockitoVersion>
 		<hamcrestVersion>2.2</hamcrestVersion>
 
