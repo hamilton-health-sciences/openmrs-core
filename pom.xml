@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     This Source Code Form is subject to the terms of the Mozilla Public License,
@@ -14,27 +15,27 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.openmrs</groupId>
 	<artifactId>openmrs</artifactId>
-	<version>2.5.0-SNAPSHOT</version>
+	<version>2.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>OpenMRS</name>
 	<description>Master project for the modules of OpenMRS</description>
-	<url>http://openmrs.org</url>
+	<url>https://openmrs.org</url>
 
 	<issueManagement>
 		<system>JIRA</system>
-		<url>http://tickets.openmrs.org/</url>
+		<url>https://tickets.openmrs.org/</url>
 	</issueManagement>
 
 	<licenses>
 		<license>
 			<name>Mozilla Public License 2.0 with Healthcare Disclaimer</name>
-			<url>http://openmrs.org/license</url>
+			<url>https://openmrs.org/license</url>
 		</license>
 	</licenses>
 
 	<organization>
 		<name>OpenMRS Inc.</name>
-		<url>http://openmrs.org</url>
+		<url>https://openmrs.org</url>
 	</organization>
 
 	<scm>
@@ -167,7 +168,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.9.0</version>
+				<version>2.11.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -264,7 +265,7 @@
 			<dependency>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-core</artifactId>
-				<version>3.10.3</version>
+				<version>4.4.1</version>
 				<exclusions>
 					<exclusion>
 						<groupId>ch.qos.logback</groupId>
@@ -280,7 +281,7 @@
 			<dependency>
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
-				<version>0.9.12</version>
+				<version>0.10.2</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -321,7 +322,7 @@
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v23</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
@@ -331,12 +332,12 @@
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v25</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>ca.uhn.hapi</groupId>
 				<artifactId>hapi-structures-v26</artifactId>
-				<version>2.3</version>
+				<version>2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.dom4j</groupId>
@@ -388,7 +389,7 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>8.0.24</version>
+				<version>8.0.27</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -399,18 +400,18 @@
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>42.2.20</version>
+				<version>42.3.1</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-core-asl</artifactId>
-				<version>1.9.13-atlassian-2</version>
+				<version>1.9.13</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.jackson</groupId>
 				<artifactId>jackson-mapper-asl</artifactId>
-				<version>1.9.13-atlassian-2</version>
+				<version>1.9.13</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -501,7 +502,7 @@
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>
-				<version>2.7.0</version>
+				<version>2.7.2</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.validation</groupId>
@@ -536,7 +537,7 @@
 			<dependency>
 			  <groupId>joda-time</groupId>
 			  <artifactId>joda-time</artifactId>
-			  <version>2.10.10</version>
+			  <version>2.10.13</version>
 			</dependency>
 			<dependency>
 			    <groupId>javax.annotation</groupId>
@@ -556,7 +557,7 @@
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-impl</artifactId>
-			    <version>3.0.1</version>
+			    <version>3.0.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -608,12 +609,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.3.1</version>
+					<version>3.3.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
-					<version>1.4</version>
+					<version>3.0.0</version>
 					<configuration>
 						<buildNumberPropertyName>revisionNumber</buildNumberPropertyName>
 						<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
@@ -634,7 +635,7 @@
 				<plugin>
 					<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
 					<artifactId>maven-java-formatter-plugin</artifactId>
-					<version>0.4</version>
+					<version>0.3</version>
 					<configuration>
 						<compilerSource>${javaCompilerVersion}</compilerSource>
 						<compilerCompliance>${javaCompilerVersion}</compilerCompliance>
@@ -694,7 +695,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.3.0</version>
+					<version>3.3.1</version>
 					<configuration>
 						<!-- For some reason some packages from org.springframework are being
 						included and causing errors. -->
@@ -784,7 +785,7 @@
 				<plugin>
 					<groupId>org.sonarsource.scanner.maven</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
-					<version>3.9.0.2155</version>
+					<version>3.9.1.2184</version>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
@@ -812,7 +813,7 @@
 				<plugin>
 					<groupId>com.mycila</groupId>
 					<artifactId>license-maven-plugin</artifactId>
-					<version>4.0</version>
+					<version>3.0</version>
 					<configuration>
 						<header>/org/openmrs/license/license-header.txt</header>
 						<includes>
@@ -1033,6 +1034,13 @@
 				</dependency>
 			</dependencies>
 		</profile>
+		<profile>
+			<id>sonar-cloud</id>
+			<properties>
+				<sonar.organization>openmrs</sonar.organization>
+				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+			</properties>
+		</profile>
 	</profiles>
 
 	<reporting>
@@ -1041,12 +1049,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.3.1</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<bottom>&lt;em&gt;&lt;small&gt; Generated ${TIMESTAMP} NOTE - these libraries are in active development and subject to change&lt;/small&gt;&lt;/em&gt;</bottom>
-					<header>&lt;a href="http://www.openmrs.org" target=_top&gt;&lt;img src="resources/openmrs-logo-small.gif" border=0/&gt;&lt;/a&gt;</header>
-					<footer>&lt;a href="http://www.openmrs.org" target=_top&gt;${project.name}&lt;/a&gt;</footer>
+					<header>&lt;a href="https://www.openmrs.org" target=_top&gt;&lt;img src="resources/openmrs-logo-small.gif" border=0/&gt;&lt;/a&gt;</header>
+					<footer>&lt;a href="https://www.openmrs.org" target=_top&gt;${project.name}&lt;/a&gt;</footer>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -1105,22 +1113,22 @@
 			 For instance, our version of Lucene is tied to the version of Hibernate Search. Similarly, our
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
-		<springVersion>5.2.14.RELEASE</springVersion>
-		<hibernateVersion>5.4.32.Final</hibernateVersion>
-		<hibernateSearchVersion>5.11.9.Final</hibernateSearchVersion>
+    <springVersion>5.2.14.RELEASE</springVersion>
+		<hibernateVersion>5.6.2.Final</hibernateVersion>
+		<hibernateSearchVersion>5.11.10.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
-		<aspectjVersion>1.9.6</aspectjVersion>
-		<jacksonVersion>2.12.3</jacksonVersion>
-		<junitVersion>5.7.2</junitVersion>
-		<mockitoVersion>3.10.0</mockitoVersion>
+		<aspectjVersion>1.9.7</aspectjVersion>
+		<jacksonVersion>2.13.0</jacksonVersion>
+		<junitVersion>5.8.2</junitVersion>
+		<mockitoVersion>3.12.4</mockitoVersion>
 		<hamcrestVersion>2.2</hamcrestVersion>
 
-		<slf4jVersion> 1.7.30</slf4jVersion>
-		<log4jVersion>2.14.1</log4jVersion>
+		<slf4jVersion>1.7.32</slf4jVersion>
+		<log4jVersion>2.16.0</log4jVersion>
 
 		<customArgLineForTesting />
 
-		<sonar.host.url>https://sonar.openmrs.org</sonar.host.url>
+		<sonar.host.url>https://sonar.openmrs.org</sonar.host.url>		
 		<sonar.issuesReport.html.enable>true</sonar.issuesReport.html.enable>
 		<sonar.issuesReport.lightModeOnly>true</sonar.issuesReport.lightModeOnly>
 		<sonar.issuesReport.console.enable>true</sonar.issuesReport.console.enable>
