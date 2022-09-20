@@ -211,7 +211,7 @@
 			<dependency>
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
-				<version>3.29.1-GA</version>
+				<version>3.29.2-GA</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -428,6 +428,11 @@
 				<version>${jacksonVersion}</version>
 			</dependency>
 			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-jsr310</artifactId>
+				<version>${jacksonVersion}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.azeckoski</groupId>
 				<artifactId>reflectutils</artifactId>
 				<version>0.9.20</version>
@@ -554,11 +559,6 @@
 			    <version>4.0.0</version>
 			</dependency>
 			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
-			    <version>3.0.2</version>
-			</dependency>
-			<dependency>
 				<groupId>com.sun.mail</groupId>
 				<artifactId>javax.mail</artifactId>
 				<version>1.6.2</version>
@@ -593,7 +593,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.2</version>
+					<version>3.3.0</version>
 					<configuration>
 						<archive>
 							<manifestEntries>
@@ -1118,18 +1118,18 @@
 			 For instance, our version of Lucene is tied to the version of Hibernate Search. Similarly, our
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
-		<springVersion>5.3.22</springVersion>
-		<hibernateVersion>5.6.10.Final</hibernateVersion>
+		<springVersion>5.3.23</springVersion>
+		<hibernateVersion>5.6.11.Final</hibernateVersion>
 		<hibernateSearchVersion>5.11.10.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
 		<aspectjVersion>1.9.9.1</aspectjVersion>
-		<jacksonVersion>2.13.3</jacksonVersion>
+		<jacksonVersion>2.13.4</jacksonVersion>
 		<junitVersion>5.9.0</junitVersion>
 		<mockitoVersion>3.12.4</mockitoVersion>
 		<hamcrestVersion>2.2</hamcrestVersion>
 
 		<slf4jVersion>1.7.36</slf4jVersion>
-		<log4jVersion>2.18.0</log4jVersion>
+		<log4jVersion>2.19.0</log4jVersion>
 		<owaspCsrfGuardVersion>4.2.0</owaspCsrfGuardVersion>
 
 		<customArgLineForTesting />
