@@ -384,7 +384,7 @@
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
-				<version>1.4</version>
+				<version>1.5</version>
 			</dependency>
 			<dependency>
 				<groupId>mysql</groupId>
@@ -400,7 +400,7 @@
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>42.5.1</version>
+				<version>42.5.4</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
@@ -719,7 +719,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.4.1</version>
+					<version>3.5.0</version>
 					<configuration>
 						<!-- For some reason some packages from org.springframework are being
 						included and causing errors. -->
@@ -1105,7 +1105,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.4.1</version>
+				<version>3.5.0</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<bottom>&lt;em&gt;&lt;small&gt; Generated ${TIMESTAMP} NOTE - these libraries are in active development and subject to change&lt;/small&gt;&lt;/em&gt;</bottom>
@@ -1170,8 +1170,8 @@
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
 		<springVersion>5.3.23</springVersion>
-		<hibernateVersion>5.6.14.Final</hibernateVersion>
-		<hibernateSearchVersion>5.11.11.Final</hibernateSearchVersion>
+		<hibernateVersion>5.6.15.Final</hibernateVersion>
+		<hibernateSearchVersion>5.11.12.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
 		<aspectjVersion>1.9.19</aspectjVersion>
 		<jacksonVersion>2.14.2</jacksonVersion>
@@ -1180,7 +1180,7 @@
 		<hamcrestVersion>2.2</hamcrestVersion>
 
 		<slf4jVersion>1.7.36</slf4jVersion>
-		<log4jVersion>2.19.0</log4jVersion>
+		<log4jVersion>2.20.0</log4jVersion>
 		<owaspCsrfGuardVersion>4.2.0</owaspCsrfGuardVersion>
 
 		<customArgLineForTesting />
