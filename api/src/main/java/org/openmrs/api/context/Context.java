@@ -374,19 +374,7 @@ public class Context {
 	public static void becomeUser(String systemId) throws ContextAuthenticationException {
 		log.info("systemId: {}", systemId);
 
-		User user = getUserContext().becomeUser(systemId);
-
-		// if assuming identity procedure finished successfully, we should change context locale parameter
-		Locale locale = null;
-		if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
-			String localeString = user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
-			locale = LocaleUtility.fromSpecification(localeString);
-		}
-		// when locale parameter is not valid or does not exist
-		if (locale == null) {
-			locale = LocaleUtility.getDefaultLocale();
-		}
-		Context.setLocale(locale);
+		getUserContext().becomeUser(systemId);
 	}
 
 	/**
@@ -699,7 +687,12 @@ public class Context {
 		if (Daemon.isDaemonThread()) {
 			return true;
 		} else {
-			return getAuthenticatedUser() != null;
+			try {
+				return getAuthenticatedUser() != null;
+			} catch (APIException e) {
+				log.info("Could not get authenticated user inside called to isAuthenticated(), assuming no user context has been defined", e);
+				return false;
+			}
 		}
 	}
 
