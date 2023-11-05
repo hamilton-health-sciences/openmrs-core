@@ -55,6 +55,7 @@ import org.openmrs.Provider;
 import org.openmrs.ProviderAttributeType;
 import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.TestOrder;
+import org.openmrs.User;
 import org.openmrs.Visit;
 import org.openmrs.VisitAttributeType;
 import org.openmrs.api.builder.DrugOrderBuilder;
@@ -2654,6 +2655,7 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 			.addAnnotatedClass(Location.class)
 			.addAnnotatedClass(PersonAddress.class)
 			.addAnnotatedClass(PersonAttributeType.class)
+			.addAnnotatedClass(User.class)
 			.getMetadataBuilder().build();
 
 
@@ -3960,6 +3962,43 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 		e2.addOrder(o2);
 		encounterService.saveEncounter(e2);
 		assertThat(new SimpleDateFormat("yyyy-MM-dd").format(o1.getDateStopped()), is("2008-08-14"));
+	}
+
+	/**
+	 * @see OrderService#saveOrderGroup(org.openmrs.OrderGroup, OrderContext)
+	 */
+	@Test
+	public void saveOrderGroup_shouldSaveOrderGroupWithOrderContext() {
+		executeDataSet(ORDER_SET);
+		Encounter encounter = encounterService.getEncounter(3);
+		OrderSet orderSet = Context.getOrderSetService().getOrderSet(1);
+		OrderGroup orderGroup = new OrderGroup();
+		orderGroup.setOrderSet(orderSet);
+		orderGroup.setPatient(encounter.getPatient());
+		orderGroup.setEncounter(encounter);
+
+		Order firstOrder = new OrderBuilder().withAction(Order.Action.NEW).withPatient(1).withConcept(10).withOrderer(1)
+			.withEncounter(3).withDateActivated(new Date()).withOrderType(17)
+			.withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
+
+		Order secondOrder = new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(10).withOrderer(1)
+			.withEncounter(3).withDateActivated(new Date()).withOrderType(17)
+			.withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
+
+		orderGroup.addOrder(firstOrder);
+		orderGroup.addOrder(secondOrder);
+
+		OrderType orderType = orderService.getOrderType(17);
+		CareSetting careSetting = orderService.getCareSetting(1);
+
+		OrderContext orderContext = new OrderContext();
+		orderContext.setCareSetting(careSetting);
+		orderContext.setOrderType(orderType);
+		OrderGroup result = orderService.saveOrderGroup(orderGroup, orderContext);
+
+		assertEquals(2, result.getOrders().size());
+		assertEquals(orderType, result.getOrders().get(0).getOrderType());
+		assertEquals(careSetting, result.getOrders().get(1).getCareSetting());
 	}
 	
 	/**

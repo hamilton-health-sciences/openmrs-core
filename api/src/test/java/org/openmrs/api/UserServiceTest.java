@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -389,6 +390,33 @@ public class UserServiceTest extends BaseContextSensitiveTest {
 		
 		userService.changePassword("test", "Tester12");
 		userService.changePassword("Tester12", "Tester13");
+	}
+	
+	@Test
+	public void changePassword_shouldRespectLockingViaRuntimeProperty() {
+		assertThat("admin", is(Context.getAuthenticatedUser().getUsername()));
+		User u = userService.getUserByUsername(ADMIN_USERNAME);
+		
+		assertThat(u.isSuperUser(), is(true));
+
+		Properties props = Context.getRuntimeProperties();
+		props.setProperty(UserService.ADMIN_PASSWORD_LOCKED_PROPERTY, "true");
+		Context.setRuntimeProperties(props);
+
+		APIException apiException = assertThrows(APIException.class, () -> userService.changePassword(u,"test", "SuperAdmin123"));
+		
+		assertThat(apiException.getMessage(), is("admin.password.is.locked"));
+
+		props.setProperty(UserService.ADMIN_PASSWORD_LOCKED_PROPERTY, "True");
+		Context.setRuntimeProperties(props);
+		
+		apiException = assertThrows(APIException.class, () -> userService.changePassword(u,"test", "SuperAdmin123"));
+		assertThat(apiException.getMessage(), is("admin.password.is.locked"));
+		
+		props.remove(UserService.ADMIN_PASSWORD_LOCKED_PROPERTY);
+		Context.setRuntimeProperties(props);
+
+		userService.changePassword(u,"test", "SuperAdmin123");
 	}
 
 	@Test
@@ -1438,7 +1466,7 @@ public class UserServiceTest extends BaseContextSensitiveTest {
 		User user = userService.getUserByUsername(ADMIN_USERNAME);
 		assertNotNull(user, "There needs to be a user with username 'admin' in the database");
 		
-		userService.changePassword(user, "testTest123");
+		userService.changePassword(user, "test", "testTest123");
 		
 		Context.authenticate(user.getUsername(), "testTest123");
 	}
@@ -1449,7 +1477,9 @@ public class UserServiceTest extends BaseContextSensitiveTest {
 		User user = userService.getUser(6001);
 		assertFalse(user.hasPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS));
 		Context.authenticate(user.getUsername(), "userServiceTest");
-		APIAuthenticationException exception = assertThrows(APIAuthenticationException.class, () ->  userService.changePassword(user, "testTest123"));
+		
+		APIAuthenticationException exception = assertThrows(APIAuthenticationException.class, () ->  userService.changePassword(user, "userServiceTest", "testTest123"));
+		
 		assertThat(exception.getMessage(), is(messages.getMessage("error.privilegesRequired", new Object[] {PrivilegeConstants.EDIT_USER_PASSWORDS}, null)));
 	}
 	

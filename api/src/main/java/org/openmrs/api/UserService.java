@@ -35,6 +35,8 @@ import org.openmrs.notification.MessageException;
  * @see org.openmrs.api.context.Context
  */
 public interface UserService extends OpenmrsService {
+
+	public static final String ADMIN_PASSWORD_LOCKED_PROPERTY = "admin_password_locked";
 	
 	/**
 	 * Create user with given password.
@@ -318,16 +320,17 @@ public interface UserService extends OpenmrsService {
 	/**
 	 * Changes the current user's password.
 	 * 
-	 * @param pw current password
-	 * @param pw2 new password
+	 * @param oldPassword current password
+	 * @param newPassword new password
 	 * @throws APIException
 	 * <strong>Should</strong> match on correctly hashed sha1 stored password
 	 * <strong>Should</strong> match on incorrectly hashed sha1 stored password
 	 * <strong>Should</strong> match on sha512 hashed password
 	 * <strong>Should</strong> be able to update password multiple times
+	 * <strong>Should</strong> respect locking via runtime properties
 	 */
 	@Logging(ignoredArgumentIndexes = { 0, 1 })
-	public void changePassword(String pw, String pw2) throws APIException;
+	public void changePassword(String oldPassword, String newPassword) throws APIException;
 
 	/**
 	 * Changes password of {@link User} passed in
