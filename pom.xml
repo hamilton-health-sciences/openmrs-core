@@ -585,13 +585,13 @@
 			<dependency>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>mysql</artifactId>
-				<version>1.19.1</version>
+				<version>1.19.2</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>1.19.1</version>
+				<version>1.19.2</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>
@@ -603,7 +603,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.2.1</version>
+					<version>3.2.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -730,7 +730,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>3.6.2</version>
 					<configuration>
 						<!-- For some reason some packages from org.springframework are being
 						included and causing errors. -->
@@ -935,7 +935,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.2</version>
 				<configuration>
 					<failIfNoTests>false</failIfNoTests>
 					<useSystemClassLoader>false</useSystemClassLoader>
@@ -1108,6 +1108,37 @@
 				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 			</properties>
 		</profile>
+		
+		<!-- When using mockito-core:3.12.4 with Java 17, we get the following error.
+		 java.lang.NullPointerException: Cannot read the array length because "this.buf" is null
+		 mockito-core:5.6.0 does not support Java 8.
+		 So this profile is required
+		 -->
+		<profile>
+			<id>java17</id>
+			<activation>
+				<jdk>17</jdk>
+			</activation>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.mockito</groupId>
+						<artifactId>mockito-core</artifactId>
+						<version>5.6.0</version>
+					</dependency>
+					<dependency>
+						<groupId>net.bytebuddy</groupId>
+						<artifactId>byte-buddy</artifactId>
+						<version>1.14.10</version>
+					</dependency>
+					<dependency>
+						<groupId>net.bytebuddy</groupId>
+						<artifactId>byte-buddy-agent</artifactId>
+						<version>1.14.10</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
 	</profiles>
 
 	<reporting>
@@ -1116,7 +1147,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.6.0</version>
+				<version>3.6.2</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<bottom>&lt;em&gt;&lt;small&gt; Generated ${TIMESTAMP} NOTE - these libraries are in active development and subject to change&lt;/small&gt;&lt;/em&gt;</bottom>
@@ -1180,18 +1211,18 @@
 			 For instance, our version of Lucene is tied to the version of Hibernate Search. Similarly, our
 			 version of Hibernate Search must be compatible with the version of Hibernate and Hibernate must
 			 be compatible with our version of Spring. -->
-		<springVersion>5.3.23</springVersion>
+		<springVersion>5.3.30</springVersion>
 		<hibernateVersion>5.6.15.Final</hibernateVersion>
 		<hibernateSearchVersion>5.11.12.Final</hibernateSearchVersion>
 		<luceneVersion>5.5.5</luceneVersion>
 		<aspectjVersion>1.9.20.1</aspectjVersion>
-		<jacksonVersion>2.15.3</jacksonVersion>
+		<jacksonVersion>2.16.0</jacksonVersion>
 		<junitVersion>5.10.1</junitVersion>
 		<mockitoVersion>3.12.4</mockitoVersion>
 		<hamcrestVersion>2.2</hamcrestVersion>
 
 		<slf4jVersion>1.7.36</slf4jVersion>
-		<log4jVersion>2.21.1</log4jVersion>
+		<log4jVersion>2.22.0</log4jVersion>
 		<owaspCsrfGuardVersion>4.2.1</owaspCsrfGuardVersion>
 
 		<customArgLineForTesting />
