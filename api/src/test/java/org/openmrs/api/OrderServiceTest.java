@@ -36,6 +36,7 @@ import org.openmrs.Encounter;
 import org.openmrs.FreeTextDosingInstructions;
 import org.openmrs.GlobalProperty;
 import org.openmrs.Location;
+import org.openmrs.LocationAttributeType;
 import org.openmrs.MedicationDispense;
 import org.openmrs.Obs;
 import org.openmrs.Order;
@@ -49,10 +50,12 @@ import org.openmrs.OrderGroupAttributeType;
 import org.openmrs.OrderSet;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
+import org.openmrs.PatientState;
 import org.openmrs.PersonAddress;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.Provider;
 import org.openmrs.ProviderAttributeType;
+import org.openmrs.Relationship;
 import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.TestOrder;
 import org.openmrs.User;
@@ -61,6 +64,7 @@ import org.openmrs.VisitAttributeType;
 import org.openmrs.api.builder.DrugOrderBuilder;
 import org.openmrs.api.builder.OrderBuilder;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.db.SerializedObject;
 import org.openmrs.api.db.hibernate.HibernateAdministrationDAO;
 import org.openmrs.api.db.hibernate.HibernateSessionFactoryBean;
 import org.openmrs.api.impl.OrderServiceImpl;
@@ -310,7 +314,7 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 		assertEquals(22, orders.get(2).getOrderId().intValue());
 		assertEquals(2, orders.get(3).getOrderId().intValue());
 	}
-
+	
 	/**
 	 * @see OrderService#getOrderHistoryByConcept(Patient, Concept)
 	 */
@@ -2652,10 +2656,14 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 			.addAnnotatedClass(MedicationDispense.class)
 			.addAnnotatedClass(ProviderAttributeType.class)
 			.addAnnotatedClass(ConceptMapType.class)
+			.addAnnotatedClass(Relationship.class)
 			.addAnnotatedClass(Location.class)
 			.addAnnotatedClass(PersonAddress.class)
 			.addAnnotatedClass(PersonAttributeType.class)
 			.addAnnotatedClass(User.class)
+			.addAnnotatedClass(LocationAttributeType.class)
+			.addAnnotatedClass(SerializedObject.class)
+			.addAnnotatedClass(PatientState.class)
 			.getMetadataBuilder().build();
 
 
@@ -3812,7 +3820,43 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 		orderGroup = Context.getOrderService().getOrderGroup(orderGroupId);
 		Context.getOrderService().saveOrderGroup(orderGroup);
 	}
-	
+
+	@Test
+	public void getOrderGroupsByPatient_shouldReturnOrderGroupsForTheGivenPatient() {
+		Patient patient = Context.getPatientService().getPatient(7);
+
+		List<OrderGroup> orderGroups = orderService.getOrderGroupsByPatient(patient);
+
+		assertNotNull(orderGroups);
+		assertEquals(2, orderGroups.size());
+
+		assertTrue(orderGroups.stream().anyMatch(group -> group.getOrderGroupId() == 1));
+		assertTrue(orderGroups.stream().anyMatch(group -> group.getOrderGroupId() == 3));
+	}
+
+	@Test
+	public void getOrderGroupsByPatient_shouldThrowAPIExceptionForNullPatient() {
+		assertThrows(APIException.class, () -> orderService.getOrderGroupsByPatient(null));
+	}
+
+	@Test
+	public void getOrderGroupsByEncounter_shouldReturnOrderGroupsForTheGivenEncounter() {
+		Encounter encounter = Context.getEncounterService().getEncounter(3);
+
+		List<OrderGroup> orderGroups = orderService.getOrderGroupsByEncounter(encounter);
+		
+		assertNotNull(orderGroups);
+		assertEquals(2, orderGroups.size());
+
+		assertTrue(orderGroups.stream().anyMatch(group -> group.getOrderGroupId() == 1));
+		assertTrue(orderGroups.stream().anyMatch(group -> group.getOrderGroupId() == 3));
+	}
+
+	@Test
+	public void getOrderGroupsByEncounter_shouldThrowAPIExceptionForNullEncounter() {
+		assertThrows(APIException.class, () -> orderService.getOrderGroupsByEncounter(null));
+	}
+
 	@Test
 	public void getOrderGroupAttributeTypes_shouldReturnAllOrderGroupAttributeTypes() {
 		List<OrderGroupAttributeType> orderGroupAttributeTypes = orderService.getAllOrderGroupAttributeTypes();
@@ -4100,5 +4144,20 @@ public class OrderServiceTest extends BaseContextSensitiveTest {
 		OrderAttribute orderAttribute = orderService.getOrderAttributeByUuid("8c3c27e4-030f-410e-86de-a5743b0b3361");
 		assertEquals("Testing Reference", orderAttribute.getValueReference());
 		assertEquals(1, orderAttribute.getId());
+	}
+
+	@Test
+	public void getOrderAttributeTypeByName_shouldReturnCorrectOrderAttributeType() {
+		final String ORDER_ATTRIBUTE_TYPE_NAME = "Supplies";
+
+		OrderAttributeType orderAttributeType = orderService.getOrderAttributeTypeByName(ORDER_ATTRIBUTE_TYPE_NAME);
+
+		assertNotNull(orderAttributeType);
+		assertEquals(ORDER_ATTRIBUTE_TYPE_NAME, orderAttributeType.getName());
+	}
+
+	@Test
+	public void getOrderAttributeTypeByName_shouldReturnNullForMismatchedName() {
+		assertNull(orderService.getOrderAttributeTypeByName("InvalidName"));
 	}
 }
