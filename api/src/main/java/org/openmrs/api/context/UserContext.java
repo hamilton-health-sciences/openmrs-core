@@ -11,6 +11,7 @@ package org.openmrs.api.context;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +59,7 @@ public class UserContext implements Serializable {
 	/**
 	 * User's permission proxies
 	 */
-	private List<String> proxies = new ArrayList<>();
+	private List<String> proxies = Collections.synchronizedList(new ArrayList<>());
 	
 	/**
 	 * User's locale
@@ -238,6 +239,11 @@ public class UserContext implements Serializable {
 	 * @param privilege to give to users
 	 */
 	public void addProxyPrivilege(String privilege) {
+		
+		if (privilege == null) {
+			throw new IllegalArgumentException("UserContext.addProxyPrivilege does not accept null privileges");
+		}
+		
 		log.debug("Adding proxy privilege: {}", privilege);
 		
 		proxies.add(privilege);
@@ -323,6 +329,14 @@ public class UserContext implements Serializable {
 	 * <strong>Should</strong> not authorize if anonymous user does not have specified privilege
 	 */
 	public boolean hasPrivilege(String privilege) {
+		log.debug("Checking '{}' against proxies: {}", privilege, proxies);
+		// check proxied privileges
+		for (String s : new ArrayList<>(proxies)) {
+			if (s.equals(privilege)) {
+				notifyPrivilegeListeners(getAuthenticatedUser(), privilege, true);
+				return true;
+			}
+		}
 		
 		// if a user has logged in, check their privileges
 		if (isAuthenticated()
@@ -332,16 +346,6 @@ public class UserContext implements Serializable {
 			notifyPrivilegeListeners(getAuthenticatedUser(), privilege, true);
 			return true;
 			
-		}
-		
-		log.debug("Checking '{}' against proxies: {}", privilege, proxies);
-		
-		// check proxied privileges
-		for (String s : proxies) {
-			if (s.equals(privilege)) {
-				notifyPrivilegeListeners(getAuthenticatedUser(), privilege, true);
-				return true;
-			}
 		}
 		
 		if (getAnonymousRole().hasPrivilege(privilege)) {
